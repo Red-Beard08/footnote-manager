@@ -1,0 +1,10 @@
+import assert from "node:assert/strict";
+import { existsSync, readFileSync } from "node:fs";
+const manifest = JSON.parse(readFileSync("manifest.json", "utf8"));
+assert.equal(manifest.id, "footnote-manager");
+assert.equal(manifest.version, "1.0.0");
+assert.equal(manifest.author, "Red-Beard");
+assert.equal(manifest.isDesktopOnly, false);
+assert.ok(existsSync("main.js"));
+assert.ok(existsSync("styles.css"));
+console.log("release files validated");

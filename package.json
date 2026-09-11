@@ -1,0 +1,21 @@
+{
+  "name": "footnote-manager",
+  "version": "1.0.0",
+  "description": "A mobile-compatible native Markdown footnote manager for Obsidian.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "node esbuild.config.mjs production",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run typecheck && npm run build && node scripts/test-utils.mjs && node scripts/validate-build.mjs"
+  },
+  "keywords": ["obsidian", "footnotes", "markdown", "mobile"],
+  "author": "Red-Beard",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "obsidian": "latest",
+    "typescript": "^5.7.0"
+  }
+}

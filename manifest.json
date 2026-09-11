@@ -1,0 +1,10 @@
+{
+  "id": "footnote-manager",
+  "name": "Footnote Manager",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "Manage native Markdown footnotes with a mobile-safe editor and dashboard.",
+  "author": "Red-Beard",
+  "authorUrl": "https://github.com/Red-Beard08",
+  "isDesktopOnly": false
+}
