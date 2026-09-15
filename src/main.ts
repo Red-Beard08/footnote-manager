@@ -34,7 +34,7 @@ export default class FootnoteManagerPlugin extends Plugin {
     this.addSettingTab(new FootnoteManagerSettingTab(this.app, this));
     this.registerEvent(this.app.vault.on("modify", file => this.handleModify(file.path)));
     this.registerEvent(this.app.vault.on("rename", file => this.handleModify(file.path)));
-    this.widgetDisposals.push(registerDashboardWidget(this.app, { id: "footnote-manager/overview", name: "Footnote overview", icon: "footprints", description: "Footnote counts and review issues.", defaultLayout: { w: 4, mobileW: 12, h: 2, order: 80 }, mobile: "responsive", render: async (_ctx, container) => { const data = await this.repository.scan(); container.empty(); container.createEl("h3", { text: "Footnotes" }); container.createEl("p", { text: `${data.definitions} definitions · ${data.notes.length} notes` }); if (data.issues) container.createEl("p", { text: `${data.issues} issue${data.issues === 1 ? "" : "s"}`, cls: "footnote-manager-warning" }); } }));
+    this.widgetDisposals.push(registerDashboardWidget(this.app, { id: "footnote-manager/overview", name: "Footnote overview", icon: "footprints", description: "Footnote counts and review issues.", defaultLayout: { w: 4, mobileW: 12, h: 2, order: 80 }, mobile: "responsive", render: async (_ctx, container) => { const data = await this.repository.scan(); container.empty(); container.createEl("p", { text: `${data.definitions} definitions · ${data.notes.length} notes` }); if (data.issues) container.createEl("p", { text: `${data.issues} issue${data.issues === 1 ? "" : "s"}`, cls: "footnote-manager-warning" }); } }));
     await this.refresh();
   }
 
