@@ -5,7 +5,7 @@ import { FootnoteRepository } from "./repository";
 import { FootnoteManagerSettingTab } from "./settings";
 import { DEFAULT_SETTINGS, FootnoteManagerSettings, NoteFootnotes } from "./types";
 import { nextNumericLabel } from "./utils";
-import { registerDashboardWidget } from "./widget-bridge";
+import { registerDashboardModule, registerDashboardWidget } from "./widget-bridge";
 
 export default class FootnoteManagerPlugin extends Plugin {
   settings: FootnoteManagerSettings = DEFAULT_SETTINGS;
@@ -82,3 +82,12 @@ export default class FootnoteManagerPlugin extends Plugin {
 }
 
 export { DASHBOARD_VIEW };
+const rbFootnoteDisposals = new WeakMap<object, () => void>();
+const rbFootnoteOnload = FootnoteManagerPlugin.prototype.onload;
+FootnoteManagerPlugin.prototype.onload = async function(this: FootnoteManagerPlugin) {
+  await rbFootnoteOnload.call(this);
+  const dispose = registerDashboardModule(this.app, { id: "footnote-manager", name: "Footnote Manager", command: "footnote-manager:open-dashboard", icon: "footprints", description: "Manage native Markdown footnotes.", order: 90 });
+  rbFootnoteDisposals.set(this, dispose);
+};
+const rbFootnoteOnunload = FootnoteManagerPlugin.prototype.onunload;
+FootnoteManagerPlugin.prototype.onunload = function(this: FootnoteManagerPlugin) { rbFootnoteDisposals.get(this)?.(); return rbFootnoteOnunload ? rbFootnoteOnunload.call(this) : undefined; };
